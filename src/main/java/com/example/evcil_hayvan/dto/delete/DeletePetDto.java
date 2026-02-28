@@ -1,12 +1,12 @@
 package com.example.evcil_hayvan.dto.delete;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class OwnerDeleteDto {
+public class DeletePetDto {
 
-    @NotNull
     private Long ownerId;
+
+    private Long petId;
 
 }

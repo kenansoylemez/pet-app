@@ -1,6 +1,6 @@
 package com.example.evcil_hayvan.controller.pets;
 
-import com.example.evcil_hayvan.dto.create.CatRegisterationDto;
+import com.example.evcil_hayvan.dto.create.CreateCatDtoCreate;
 import com.example.evcil_hayvan.entity.pets.Cat;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
@@ -25,7 +25,7 @@ public class CatController {
     }
 
     @PostMapping("/add")
-    public Cat addCat(@RequestBody CatRegisterationDto dto){
+    public Cat addCat(@RequestBody CreateCatDtoCreate dto){
         return catService.addCat(dto);
     }
 

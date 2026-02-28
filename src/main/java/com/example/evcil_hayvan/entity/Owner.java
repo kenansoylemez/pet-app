@@ -3,7 +3,6 @@ package com.example.evcil_hayvan.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -47,7 +46,10 @@ public class Owner {
     @Column(name = "pet_count")
     private int petCount;
 
-    public Owner(String firstName, String lastName, String email, String password, String phoneNumber) {
+    @Column(name = "profile_photo_url")
+    private String ownerProfilePhotoUrl;
+
+    public Owner(String firstName, String lastName, String email, String password, String phoneNumber, String ownerProfilePhotoUrl) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -55,6 +57,7 @@ public class Owner {
         this.phoneNumber = phoneNumber;
         this.pets = new ArrayList<>();
         this.petCount = 0;
+        this.ownerProfilePhotoUrl = ownerProfilePhotoUrl;
     }
 
     public Owner(){}

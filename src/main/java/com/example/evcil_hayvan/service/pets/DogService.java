@@ -1,9 +1,10 @@
 package com.example.evcil_hayvan.service.pets;
 
-import com.example.evcil_hayvan.dto.create.DogRegisterationDto;
-import com.example.evcil_hayvan.dto.update.DogUpdateDto;
+import com.example.evcil_hayvan.dto.create.CreateDogDtoCreate;
+import com.example.evcil_hayvan.dto.update.pet.dog.UpdateDogBreedDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.pets.Dog;
+import com.example.evcil_hayvan.enums.DogBreed;
 import com.example.evcil_hayvan.enums.Gender;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
 import com.example.evcil_hayvan.repository.OwnerRepo;
@@ -12,6 +13,9 @@ import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 public class DogService {
@@ -28,7 +32,8 @@ public class DogService {
         this.ownerService = ownerService;
     }
 
-    public Dog addDog(DogRegisterationDto dto){
+    @Transactional
+    public Dog addDog(CreateDogDtoCreate dto){
 
         Owner owner = ownerService.getOwnerById(dto.getOwnerId());
 
@@ -37,11 +42,12 @@ public class DogService {
                 dto.getPetBirthDate(),
                 dto.getGender(),
                 owner,
+                dto.getPetProfilePhotoUrl(),
+                dto.getWeight(),
                 dto.getBreed()
         );
 
         double age = petService.calculatePetAge(dto.getPetBirthDate());
-        dog.setPetAge(age);
         owner.setPetCount(owner.getPetCount() + 1);
         ownerRepo.save(owner);
         return dogRepo.save(dog);
@@ -53,26 +59,42 @@ public class DogService {
         return dog;
     }
 
-    public Dog updateDot(DogUpdateDto dto){
+    @Transactional
+    public Dog updateDogBreed(UpdateDogBreedDto dto){
         Dog dog = getDogById(dto.getPetId());
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        if(!(petService.isPetOwnerCorrect(dog, owner))){
+
+        if(!(dog.getOwner().getOwnerId().equals(dto.getOwnerId()))){
             throw new WrongOwnerException();
         }
-        if(dto.getNewPetName() != null && !(dog.getPetName().equals(dto.getNewPetName()))){
-            dog.setPetName(dto.getNewPetName());
+
+        if(dto.getNewDogBreed() == null){
+            return dog;
         }
-        if(dto.getNewPetBirthDate() != null && !(dog.getPetBirthDate().equals(dto.getNewPetBirthDate()))){
-            dog.setPetBirthDate(dto.getNewPetBirthDate());
-            double age = petService.calculatePetAge(dto.getNewPetBirthDate());
-            dog.setPetAge(age);
+
+        if(dto.getNewDogBreed().equals(dog.getDogBreed())){
+            return dog;
         }
-        if(dto.getNewPetGender() != null && !(dog.getGender().equals(dto.getNewPetGender()))){
-            //hayvanların cinsiyeti sadece önceden NOT_SPECIFIED olarak tanımlandığı takdirde değiştirilebilir
-            if(dog.getGender().equals(Gender.NOT_SPECIFIED)){
-                dog.setGender(dto.getNewPetGender());
+
+        if(dog.getDogBreed().equals(DogBreed.OTHER) || dog.getDogBreed().equals(DogBreed.UNKNOWN)){
+            if(dto.getNewDogBreed().equals(DogBreed.OTHER) || dto.getNewDogBreed().equals(DogBreed.UNKNOWN)){
+                dog.setDogBreed(dto.getNewDogBreed());
+            }else{
+                dog.setDogBreed(dto.getNewDogBreed());
+            }
+        }else{
+            if(dog.getBreedChangedAt() == null){
+                if(!(dto.getNewDogBreed().equals(DogBreed.OTHER) || dto.getNewDogBreed().equals(DogBreed.UNKNOWN))){
+                    dog.setDogBreed(dto.getNewDogBreed());
+                    dog.setBreedChangedAt(LocalDateTime.now());
+                }else{
+                    throw new IllegalStateException("Köpeklerin ırk bilgisi bir kere girildikten sonra" +
+                            "BİLİNMEYEN veya DİĞER değerine değiştirilemez.");
+                }
+            }else{
+                throw new IllegalStateException("Köpeklerin ırkı sadece bir kere değiştirilebilir.");
             }
         }
+
         return dogRepo.save(dog);
     }
 

@@ -1,10 +1,10 @@
 package com.example.evcil_hayvan.controller;
 
-import com.example.evcil_hayvan.dto.create.OwnerRegisterationDto;
-import com.example.evcil_hayvan.dto.delete.OwnerDeleteDto;
-import com.example.evcil_hayvan.dto.update.OwnerUpdateEmailDto;
-import com.example.evcil_hayvan.dto.update.OwnerUpdatePasswordDto;
-import com.example.evcil_hayvan.dto.update.OwnerUpdateProfileInfoDto;
+import com.example.evcil_hayvan.dto.create.CreateOwnerDto;
+import com.example.evcil_hayvan.dto.delete.DeleteOwnerDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerEmailDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerPasswordDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerProfileInfoDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
@@ -29,27 +29,27 @@ public class OwnerController {
     }
 
     @PutMapping("/update-email")
-    public Owner updateOwnerEmail(@RequestBody OwnerUpdateEmailDto dto){
+    public Owner updateOwnerEmail(@RequestBody UpdateOwnerEmailDto dto){
         return ownerService.updateOwnerEmail(dto);
     }
 
     @PutMapping("/update-password")
-    public Owner updateOwnerPassword(@RequestBody OwnerUpdatePasswordDto dto){
+    public Owner updateOwnerPassword(@RequestBody UpdateOwnerPasswordDto dto){
         return ownerService.updateOwnerPassword(dto);
     }
 
     @PutMapping("/update-profile-info")
-    public Owner updateOwnerProfileInfo(@RequestBody OwnerUpdateProfileInfoDto dto){
+    public Owner updateOwnerProfileInfo(@RequestBody UpdateOwnerProfileInfoDto dto){
         return ownerService.updateOwnerProfileInfo(dto);
     }
 
     @PostMapping("/register")
-    public Owner registerOwner(@RequestBody OwnerRegisterationDto dto){
+    public Owner registerOwner(@RequestBody CreateOwnerDto dto){
         return ownerService.addOwner(dto);
     }
 
     @DeleteMapping("/delete")
-    public void deleteOwner(@RequestBody OwnerDeleteDto dto){
+    public void deleteOwner(@RequestBody DeleteOwnerDto dto){
         ownerService.deleteOwner(dto);
     }
 

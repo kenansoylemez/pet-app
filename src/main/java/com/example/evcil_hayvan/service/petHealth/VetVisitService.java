@@ -1,12 +1,11 @@
 package com.example.evcil_hayvan.service.petHealth;
 
-import com.example.evcil_hayvan.dto.create.VetVisitCreateDto;
+import com.example.evcil_hayvan.dto.create.CreateVetVisitDto;
 import com.example.evcil_hayvan.dto.delete.DeleteVetVisitDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
-import com.example.evcil_hayvan.dto.update.UpdateVetVisitDto;
+import com.example.evcil_hayvan.dto.update.pet.UpdateVetVisitDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.Pet;
-import com.example.evcil_hayvan.entity.petHealth.Vaccination;
 import com.example.evcil_hayvan.entity.petHealth.VetVisit;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
 import com.example.evcil_hayvan.repository.OwnerRepo;
@@ -44,9 +43,8 @@ public class VetVisitService {
     }
 
     public List getAllVetVisitsByPetId(GetAllByPetDto dto){
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        Pet pet = petService.findPetById(dto.getPetId());
-        if(petService.isPetOwnerCorrect(pet, owner)){
+        Pet pet = petService.getPetById(dto.getPetId());
+        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
             throw new WrongOwnerException();
         }
         List<VetVisit> allVetVisits = vetVisitRepo.findAllByPetPetId(pet.getPetId());
@@ -54,16 +52,18 @@ public class VetVisitService {
     }
 
 
-    public VetVisit createVetVisit(VetVisitCreateDto dto){
-        Pet pet = petService.findPetById(dto.getPetId());
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        if(petService.isPetOwnerCorrect(pet, owner)){
+    public VetVisit createVetVisit(CreateVetVisitDto dto){
+        Pet pet = petService.getPetById(dto.getPetId());
+        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
             VetVisit vetVisit = new VetVisit(
                     dto.getVetVisitCause(),
                     dto.getVetVisitDate(),
                     pet,
                     dto.getVetVisitResult()
             );
+            if(vetVisit.getVetVisitResult() == null){
+                vetVisit.setVetVisitResult("Belirtilmedi");
+            }
 
             return vetVisitRepo.save(vetVisit);
         }
@@ -72,9 +72,8 @@ public class VetVisitService {
 
     public void deleteVetVisit(DeleteVetVisitDto dto){
         VetVisit vetVisit = findVetVisitById(dto.getVetVisitId());
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
         Pet pet = vetVisit.getPet();
-        if(!(petService.isPetOwnerCorrect(pet, owner))){
+        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))) {
             throw new WrongOwnerException();
         }
         vetVisitRepo.delete(vetVisit);
@@ -83,8 +82,7 @@ public class VetVisitService {
     public VetVisit updateVetVisit(UpdateVetVisitDto dto){
         VetVisit vetVisit = findVetVisitById(dto.getVetVisitId());
         Pet pet = vetVisit.getPet();
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        if(!(petService.isPetOwnerCorrect(pet, owner))){
+        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))) {
             throw new WrongOwnerException();
         }
         if(dto.getNewVetVisitCause() != null && !(vetVisit.getVetVisitCause().equals(dto.getNewVetVisitCause()))){

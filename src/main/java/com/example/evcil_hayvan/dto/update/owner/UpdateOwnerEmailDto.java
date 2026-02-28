@@ -1,9 +1,9 @@
-package com.example.evcil_hayvan.dto.update;
+package com.example.evcil_hayvan.dto.update.owner;
 
 import lombok.Data;
 
 @Data
-public class OwnerUpdateEmailDto {
+public class UpdateOwnerEmailDto {
 
     private String newEmail;
 

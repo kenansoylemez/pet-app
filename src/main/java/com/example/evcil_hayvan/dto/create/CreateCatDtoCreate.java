@@ -5,7 +5,7 @@ import com.example.evcil_hayvan.enums.Species;
 import lombok.Data;
 
 @Data
-public class CatRegisterationDto extends PetRegisterationDto {
+public class CreateCatDtoCreate extends CreatePetDto {
 
     private Species species;
 

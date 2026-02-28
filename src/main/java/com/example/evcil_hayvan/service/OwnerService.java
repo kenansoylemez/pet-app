@@ -1,14 +1,17 @@
 package com.example.evcil_hayvan.service;
 
-import com.example.evcil_hayvan.dto.delete.OwnerDeleteDto;
-import com.example.evcil_hayvan.dto.create.OwnerRegisterationDto;
-import com.example.evcil_hayvan.dto.update.OwnerUpdateEmailDto;
-import com.example.evcil_hayvan.dto.update.OwnerUpdatePasswordDto;
-import com.example.evcil_hayvan.dto.update.OwnerUpdateProfileInfoDto;
+import com.example.evcil_hayvan.dto.delete.DeleteOwnerDto;
+import com.example.evcil_hayvan.dto.create.CreateOwnerDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerProfilePhotoDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerEmailDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerPasswordDto;
+import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerProfileInfoDto;
 import com.example.evcil_hayvan.entity.Owner;
+import com.example.evcil_hayvan.exceptions.InvalidPasswordException;
 import com.example.evcil_hayvan.exceptions.SamePasswordException;
 import com.example.evcil_hayvan.exceptions.WrongPasswordException;
 import com.example.evcil_hayvan.repository.OwnerRepo;
+import com.example.evcil_hayvan.utils.PasswordValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -17,37 +20,46 @@ import org.springframework.stereotype.Service;
 public class OwnerService {
 
     private final OwnerRepo ownerRepo;
-
-    public OwnerService(OwnerRepo ownerRepo) {
+    private final PasswordValidator passwordValidator;
+    public OwnerService(OwnerRepo ownerRepo, PasswordValidator passwordValidator) {
         this.ownerRepo = ownerRepo;
+        this.passwordValidator = passwordValidator;
     }
 
-    public Owner addOwner(OwnerRegisterationDto dto){
+    public Owner addOwner(CreateOwnerDto dto){
+        if(!passwordValidator.checkPassword(dto.getPassword())){
+            throw new InvalidPasswordException();
+        }
         Owner owner = new Owner(
                 dto.getFirstName(),
                 dto.getLastName(),
                 dto.getEmail(),
                 dto.getPassword(),
-                dto.getPhoneNumber()
+                dto.getPhoneNumber(),
+                dto.getProfilePhotoUrl()
         );
         return ownerRepo.save(owner);
     }
 
     @Transactional
-    public void deleteOwner(OwnerDeleteDto dto){
+    public void deleteOwner(DeleteOwnerDto dto){
         Owner owner = getOwnerById(dto.getOwnerId());
         ownerRepo.delete(owner);
     }
 
     @Transactional
-    public Owner updateOwnerPassword(OwnerUpdatePasswordDto dto){
+    public Owner updateOwnerPassword(UpdateOwnerPasswordDto dto){
         Owner owner = getOwnerById(dto.getOwnerId());
         if(!(dto.getOldPassword().equals(owner.getPassword()))){ //Eski şifre doğru mu? Kullanıcı kontrolü için
             throw new WrongPasswordException();
         }
+        if(!passwordValidator.checkPassword(dto.getNewPassword())){
+            throw new InvalidPasswordException();
+        }
         if(dto.getNewPassword().equals(owner.getPassword())){ //Yeni şifrenin eskisiyle aynı olmaması için
             throw new SamePasswordException();
         }
+
         owner.setPassword(dto.getNewPassword());
         return ownerRepo.save(owner);
     }
@@ -58,7 +70,8 @@ public class OwnerService {
         return owner;
     }
 
-    public Owner updateOwnerProfileInfo(OwnerUpdateProfileInfoDto dto){
+    @Transactional
+    public Owner updateOwnerProfileInfo(UpdateOwnerProfileInfoDto dto){
         Owner owner = getOwnerById(dto.getOwnerId());
         if(dto.getFirstName() != null && !(owner.getFirstName().equals(dto.getFirstName()))){
             owner.setFirstName(dto.getFirstName());
@@ -72,7 +85,8 @@ public class OwnerService {
         return ownerRepo.save(owner);
     }
 
-    public Owner updateOwnerEmail(OwnerUpdateEmailDto dto){
+    @Transactional
+    public Owner updateOwnerEmail(UpdateOwnerEmailDto dto){
         Owner owner = getOwnerById(dto.getOwnerId());
         if(dto.getNewEmail() != null && !(owner.getEmail().equals(dto.getNewEmail()))){
             owner.setEmail(dto.getNewEmail());
@@ -85,5 +99,20 @@ public class OwnerService {
                 .orElseThrow(() -> new EntityNotFoundException("Kullanıcı bulunamadı: ID = " + email));
         return owner;
     }
+
+    @Transactional
+    public Owner updateOwnerProfilePhoto(UpdateOwnerProfilePhotoDto dto){
+        Owner owner = getOwnerById(dto.getOwnerId());
+        String photoUrl = dto.getPhotoUrl();
+        if(photoUrl == null || photoUrl.equals("")){
+            throw new EntityNotFoundException("Fotoğraf bulunamadı.");
+        }else if(owner.getOwnerProfilePhotoUrl().equals(photoUrl)){
+            return owner;
+        }else{
+            owner.setOwnerProfilePhotoUrl(photoUrl);
+        }
+        return ownerRepo.save(owner);
+    }
+
 
 }

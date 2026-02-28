@@ -1,14 +1,12 @@
-package com.example.evcil_hayvan.dto.update;
+package com.example.evcil_hayvan.dto.update.pet;
 
-import com.example.evcil_hayvan.entity.petHealth.Vaccination;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class UpdateVaccinationDto {
+public class UpdateVaccinationDto extends UpdatePetBaseDto{
 
     @NotNull
     private Long vaccinationId;
@@ -16,6 +14,4 @@ public class UpdateVaccinationDto {
     private String newVaccineName;
 
     private LocalDate newVaccinationDate;
-
-    private Long ownerId;
 }

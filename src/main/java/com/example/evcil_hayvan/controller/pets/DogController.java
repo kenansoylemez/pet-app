@@ -1,6 +1,6 @@
 package com.example.evcil_hayvan.controller.pets;
 
-import com.example.evcil_hayvan.dto.create.DogRegisterationDto;
+import com.example.evcil_hayvan.dto.create.CreateDogDtoCreate;
 import com.example.evcil_hayvan.entity.pets.Dog;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
@@ -25,7 +25,7 @@ public class DogController {
     }
 
     @PostMapping("/add")
-    public Dog addDog(@RequestBody DogRegisterationDto dto){
+    public Dog addDog(@RequestBody CreateDogDtoCreate dto){
         return dogService.addDog(dto);
     }
 

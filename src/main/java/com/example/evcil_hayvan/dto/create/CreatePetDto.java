@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class PetRegisterationDto {
+public class CreatePetDto {
 
     private String petName;
 
@@ -15,5 +15,9 @@ public class PetRegisterationDto {
     private Gender gender;
 
     private Long ownerId;
+
+    private String petProfilePhotoUrl;
+
+    private Double weight;
 
 }

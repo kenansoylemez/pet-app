@@ -15,5 +15,7 @@ public enum CatBreed {
     ABYSSINIAN,
     BURMESE,
     AMERICAN_SHORTHAIR,
+    UNKNOWN,
+    MIXED,
     OTHER
 }

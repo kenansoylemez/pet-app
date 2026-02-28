@@ -31,24 +31,28 @@ public class PasswordValidator {
         asciiValues = addSpecialCharacters(asciiValues);
         Collections.shuffle(asciiValues);
         passwordChars.add((char)(int)asciiValues.get(0));
-        asciiValues.clear();//adding at least one special character
+        asciiValues.clear();
+        //adding at least one special character
         //en az bir tane özel karakter ekliyoruz
 
         asciiValues = addUppercaseCharacters(asciiValues);
         Collections.shuffle(asciiValues);
         passwordChars.add((char)(int)asciiValues.get(0));
-        asciiValues.clear();//adding at least one uppercase character
+        asciiValues.clear();
+        //adding at least one uppercase character
         //en az bir tane büyük harf karakter ekliyoruz
 
         asciiValues = addLowercaseCharacters(asciiValues);
         Collections.shuffle(asciiValues);
         passwordChars.add((char)(int)asciiValues.get(0));
-        asciiValues.clear(); //adding at least one lowercase character
+        asciiValues.clear();
+        //adding at least one lowercase character
         //en az bir tane küçük harf karakter ekliyoruz
 
         asciiValues = addNumbers(asciiValues);
         Collections.shuffle(asciiValues);
-        passwordChars.add((char)(int)asciiValues.get(0)); //adding at least one number
+        passwordChars.add((char)(int)asciiValues.get(0));
+        //adding at least one number
         //en az bir tane sayı ekliyoruz
 
         asciiValues = addUppercaseCharacters(asciiValues);
@@ -149,7 +153,6 @@ public class PasswordValidator {
         for(int i=97; i<=122; i++){
             arraylist.add(i);
         }
-
         return arraylist;
     }
 
@@ -157,7 +160,6 @@ public class PasswordValidator {
         for(int i=48; i<=57; i++){
             arraylist.add(i);
         }
-
         return arraylist;
     }
 

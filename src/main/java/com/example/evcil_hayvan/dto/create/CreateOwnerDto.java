@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class OwnerRegisterationDto {
+public class CreateOwnerDto {
 
     @NotNull
     @Size(min = 2, max = 40)
@@ -27,4 +27,7 @@ public class OwnerRegisterationDto {
 
     @Size(min = 10, max = 10, message = "Lütfen telefon numaraınızı başında 0 olmayacak şekilde girin.")
     private String phoneNumber;
+
+    @Size(min = 10, max = 500)
+    private String profilePhotoUrl;
 }

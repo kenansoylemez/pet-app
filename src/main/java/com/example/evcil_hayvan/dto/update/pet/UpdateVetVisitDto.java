@@ -1,4 +1,4 @@
-package com.example.evcil_hayvan.dto.update;
+package com.example.evcil_hayvan.dto.update.pet;
 
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class UpdateVetVisitDto {
+public class UpdateVetVisitDto extends UpdatePetBaseDto{
 
     private Long vetVisitId;
 
@@ -16,6 +16,4 @@ public class UpdateVetVisitDto {
     private String newVetVisitCause;
 
     private String newVetVisitResult;
-
-    private Long ownerId;
 }

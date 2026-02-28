@@ -1,11 +1,10 @@
-package com.example.evcil_hayvan.dto.update;
+package com.example.evcil_hayvan.dto.update.owner;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class OwnerUpdateProfileInfoDto {
+public class UpdateOwnerProfileInfoDto {
 
     private Long ownerId;
 

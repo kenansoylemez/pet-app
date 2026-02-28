@@ -1,9 +1,9 @@
 package com.example.evcil_hayvan.service.petHealth;
 
-import com.example.evcil_hayvan.dto.create.VaccinationCreateDto;
+import com.example.evcil_hayvan.dto.create.CreateVaccinationDto;
 import com.example.evcil_hayvan.dto.delete.DeleteVaccinationDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
-import com.example.evcil_hayvan.dto.update.UpdateVaccinationDto;
+import com.example.evcil_hayvan.dto.update.pet.UpdateVaccinationDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.entity.petHealth.Vaccination;
@@ -43,9 +43,8 @@ public class VaccinationService {
     }
 
     public List getAllVaccinationsByPetId(GetAllByPetDto dto){
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        Pet pet = petService.findPetById(dto.getPetId());
-        if(petService.isPetOwnerCorrect(pet, owner)){
+        Pet pet = petService.getPetById(dto.getPetId());
+        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
             throw new WrongOwnerException();
         }
         List<Vaccination> allVaccinations = vaccinationRepo.findAllByPetPetId(pet.getPetId());
@@ -53,11 +52,10 @@ public class VaccinationService {
     }
 
     @Transactional
-    public Vaccination createVaccination(VaccinationCreateDto dto){
-        Pet pet =  petService.findPetById(dto.getPetId());
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
+    public Vaccination createVaccination(CreateVaccinationDto dto){
+        Pet pet =  petService.getPetById(dto.getPetId());
 
-        if(petService.isPetOwnerCorrect(pet, owner)){
+        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
             Vaccination vaccination = new Vaccination(
                     dto.getVaccineName(),
                     dto.getVaccinationDate(),
@@ -72,8 +70,7 @@ public class VaccinationService {
     public void deleteVaccination(DeleteVaccinationDto dto){
         Vaccination vaccination = getVaccinationById(dto.getVaccinationId());
         Pet pet = vaccination.getPet();
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        if(!(petService.isPetOwnerCorrect(pet, owner))){
+        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
             throw new WrongOwnerException();
         }
         vaccinationRepo.delete(vaccination);
@@ -82,8 +79,7 @@ public class VaccinationService {
     public Vaccination updateVaccination(UpdateVaccinationDto dto){
         Vaccination vaccination = getVaccinationById(dto.getVaccinationId());
         Pet pet = vaccination.getPet();
-        Owner owner = ownerService.getOwnerById(dto.getOwnerId());
-        if(!(petService.isPetOwnerCorrect(pet, owner))){
+        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
             throw new WrongOwnerException();
         }
         if(dto.getNewVaccineName() != null && !(vaccination.getVaccineName().equals(dto.getNewVaccineName()))){

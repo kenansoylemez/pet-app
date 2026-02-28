@@ -15,5 +15,7 @@ public enum DogBreed {
     CHIHUAHUA,
     POMERANIAN,
     SHIH_TZU,
+    UNKNOWN,
+    MIXED,
     OTHER
 }

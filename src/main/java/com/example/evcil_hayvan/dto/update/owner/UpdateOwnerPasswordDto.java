@@ -1,10 +1,10 @@
-package com.example.evcil_hayvan.dto.update;
+package com.example.evcil_hayvan.dto.update.owner;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class OwnerUpdatePasswordDto {
+public class UpdateOwnerPasswordDto {
 
     @NotNull
     private Long ownerId;
