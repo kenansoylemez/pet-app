@@ -10,4 +10,6 @@ public interface OwnerRepo extends JpaRepository<Owner, Long> {
     Optional<Owner> findOwnerByOwnerId(Long ownerId);
     Optional<Owner> findOwnerByEmail(String email);
     Optional<Owner> findOwnerByFirstNameAndLastName(String firstName, String lastName);
+    Optional<Owner> findOwnerByUsername(String username);
+    Optional<Owner> findOwnerByPhoneNumber(String phoneNumber);
 }

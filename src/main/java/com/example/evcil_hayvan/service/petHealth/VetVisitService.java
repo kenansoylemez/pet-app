@@ -4,13 +4,12 @@ import com.example.evcil_hayvan.dto.create.CreateVetVisitDto;
 import com.example.evcil_hayvan.dto.delete.DeleteVetVisitDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
 import com.example.evcil_hayvan.dto.update.pet.UpdateVetVisitDto;
-import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.entity.petHealth.VetVisit;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
 import com.example.evcil_hayvan.repository.OwnerRepo;
 import com.example.evcil_hayvan.repository.petHealth.VetVisitRepo;
-import com.example.evcil_hayvan.repository.pets.PetRepo;
+import com.example.evcil_hayvan.repository.PetRepo;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
 import jakarta.persistence.*;
@@ -44,7 +43,7 @@ public class VetVisitService {
 
     public List getAllVetVisitsByPetId(GetAllByPetDto dto){
         Pet pet = petService.getPetById(dto.getPetId());
-        if(pet.getOwner().getOwnerId().equals(dto.getOwnerId())){
+        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){
             throw new WrongOwnerException();
         }
         List<VetVisit> allVetVisits = vetVisitRepo.findAllByPetPetId(pet.getPetId());
@@ -73,7 +72,7 @@ public class VetVisitService {
     public void deleteVetVisit(DeleteVetVisitDto dto){
         VetVisit vetVisit = findVetVisitById(dto.getVetVisitId());
         Pet pet = vetVisit.getPet();
-        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))) {
+        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){
             throw new WrongOwnerException();
         }
         vetVisitRepo.delete(vetVisit);
@@ -82,7 +81,7 @@ public class VetVisitService {
     public VetVisit updateVetVisit(UpdateVetVisitDto dto){
         VetVisit vetVisit = findVetVisitById(dto.getVetVisitId());
         Pet pet = vetVisit.getPet();
-        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))) {
+        if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){
             throw new WrongOwnerException();
         }
         if(dto.getNewVetVisitCause() != null && !(vetVisit.getVetVisitCause().equals(dto.getNewVetVisitCause()))){

@@ -1,7 +1,6 @@
 package com.example.evcil_hayvan.entity;
 
 
-import com.example.evcil_hayvan.entity.pets.PetPhoto;
 import com.example.evcil_hayvan.enums.Gender;
 import com.example.evcil_hayvan.enums.Species;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,7 +54,7 @@ public class Pet {
     @JsonIgnore
     private Owner owner;
 
-    @Column(name = "profile_photo_url")
+    @Column(name = "pet_profile_photo_url")
     private String petProfilePhotoUrl;
 
     @Column(name = "weight")
@@ -63,6 +62,9 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PetPhoto> petPhotos = new ArrayList<>();
+
+    @Column(name = "lost")
+    private Boolean lost;
 
     public Pet() {}
 
@@ -76,6 +78,7 @@ public class Pet {
         this.owner = owner;
         this.petProfilePhotoUrl = petProfilePhotoUrl;
         this.weight = weight;
+        this.lost = false;
     }
 
 }

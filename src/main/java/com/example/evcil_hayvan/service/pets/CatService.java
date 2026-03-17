@@ -77,7 +77,7 @@ public class CatService {
             return cat;
         }
 
-        if(cat.getCatBreed().equals(CatBreed.OTHER.OTHER) || cat.getCatBreed().equals(CatBreed.UNKNOWN)){
+        if(cat.getCatBreed().equals(CatBreed.OTHER) || cat.getCatBreed().equals(CatBreed.UNKNOWN)){
             if(dto.getNewCatBreed().equals(CatBreed.OTHER) || dto.getNewCatBreed().equals(CatBreed.UNKNOWN)){
                 cat.setCatBreed(dto.getNewCatBreed());
             }else{

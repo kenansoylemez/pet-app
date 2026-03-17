@@ -8,11 +8,11 @@ import com.example.evcil_hayvan.dto.update.pet.UpdatePetProfileDto;
 import com.example.evcil_hayvan.dto.update.pet.UpdatePetOwnerDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.Pet;
-import com.example.evcil_hayvan.entity.pets.PetPhoto;
+import com.example.evcil_hayvan.entity.PetPhoto;
 import com.example.evcil_hayvan.enums.Gender;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
 import com.example.evcil_hayvan.repository.OwnerRepo;
-import com.example.evcil_hayvan.repository.pets.PetRepo;
+import com.example.evcil_hayvan.repository.PetRepo;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.Transient;
 import jakarta.transaction.Transactional;
@@ -146,10 +146,6 @@ public class PetService {
 
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){
             throw new WrongOwnerException();
-        }
-
-        if(!(dto.getNewProfilePhotoUrl() == null || dto.getNewProfilePhotoUrl().equals(""))){
-            pet.setPetProfilePhotoUrl(dto.getNewProfilePhotoUrl());
         }
 
         if(dto.getNewPetName() != null || !(dto.getNewPetName().trim().equals(""))){

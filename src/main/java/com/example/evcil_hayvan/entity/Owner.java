@@ -32,6 +32,10 @@ public class Owner {
     @Email
     private String email;
 
+    @Column(name = "username", nullable = false)
+    @Size(min = 2, max = 30)
+    private String username;
+
     @Column(name = "password", nullable = false)
     @Size(min = 8, max = 50)
     private String password;
@@ -49,10 +53,11 @@ public class Owner {
     @Column(name = "profile_photo_url")
     private String ownerProfilePhotoUrl;
 
-    public Owner(String firstName, String lastName, String email, String password, String phoneNumber, String ownerProfilePhotoUrl) {
+    public Owner(String firstName, String lastName, String email, String username, String password, String phoneNumber, String ownerProfilePhotoUrl) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.pets = new ArrayList<>();

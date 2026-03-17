@@ -1,17 +1,14 @@
 package com.example.evcil_hayvan.service;
 
 import com.example.evcil_hayvan.dto.delete.DeleteOwnerDto;
-import com.example.evcil_hayvan.dto.create.CreateOwnerDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerProfilePhotoDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerEmailDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerPasswordDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerProfileInfoDto;
 import com.example.evcil_hayvan.entity.Owner;
-import com.example.evcil_hayvan.exceptions.InvalidPasswordException;
-import com.example.evcil_hayvan.exceptions.SamePasswordException;
-import com.example.evcil_hayvan.exceptions.WrongPasswordException;
+import com.example.evcil_hayvan.exceptions.*;
 import com.example.evcil_hayvan.repository.OwnerRepo;
-import com.example.evcil_hayvan.utils.PasswordValidator;
+import com.example.evcil_hayvan.security.validation.PasswordValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -26,19 +23,33 @@ public class OwnerService {
         this.passwordValidator = passwordValidator;
     }
 
-    public Owner addOwner(CreateOwnerDto dto){
-        if(!passwordValidator.checkPassword(dto.getPassword())){
-            throw new InvalidPasswordException();
+    public Boolean isUsernameUnique(String username){
+        if(ownerRepo.findOwnerByUsername(username).isPresent()){
+            return false;
+        }else{
+            return true;
         }
-        Owner owner = new Owner(
-                dto.getFirstName(),
-                dto.getLastName(),
-                dto.getEmail(),
-                dto.getPassword(),
-                dto.getPhoneNumber(),
-                dto.getProfilePhotoUrl()
-        );
-        return ownerRepo.save(owner);
+    }
+
+    public Boolean isEmailUnique(String email){
+        if(ownerRepo.findOwnerByEmail(email).isPresent()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public Boolean isPhoneNumberUnique(String phoneNumber){
+        if(ownerRepo.findOwnerByPhoneNumber(phoneNumber).isPresent()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public Owner getOwnerByUsername(String username){
+        return ownerRepo.findOwnerByUsername(username)
+                .orElseThrow(() -> new NoUserException());
     }
 
     @Transactional
@@ -53,7 +64,7 @@ public class OwnerService {
         if(!(dto.getOldPassword().equals(owner.getPassword()))){ //Eski şifre doğru mu? Kullanıcı kontrolü için
             throw new WrongPasswordException();
         }
-        if(!passwordValidator.checkPassword(dto.getNewPassword())){
+        if(!passwordValidator.isValid(dto.getNewPassword())){
             throw new InvalidPasswordException();
         }
         if(dto.getNewPassword().equals(owner.getPassword())){ //Yeni şifrenin eskisiyle aynı olmaması için

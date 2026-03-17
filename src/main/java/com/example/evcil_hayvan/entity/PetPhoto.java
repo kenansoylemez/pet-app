@@ -1,6 +1,5 @@
-package com.example.evcil_hayvan.entity.pets;
+package com.example.evcil_hayvan.entity;
 
-import com.example.evcil_hayvan.entity.Pet;
 import jakarta.persistence.*;
 import lombok.Data;
 

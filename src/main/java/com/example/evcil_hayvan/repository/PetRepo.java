@@ -1,6 +1,5 @@
-package com.example.evcil_hayvan.repository.pets;
+package com.example.evcil_hayvan.repository;
 
-import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 

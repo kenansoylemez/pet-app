@@ -1,4 +1,4 @@
-package com.example.evcil_hayvan.dto.create;
+package com.example.evcil_hayvan.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CreateOwnerDto {
+public class OwnerRegisterDto {
 
     @NotNull
     @Size(min = 2, max = 40)
@@ -20,6 +20,10 @@ public class CreateOwnerDto {
     @Email(message = "Girdiğiniz değer, email formatına uygun değil.")
     @Size(max = 50)
     private String email;
+
+    @NotNull
+    @Size(min = 2, max = 30, message = "Kullanıcı adı en az 2, en fazla 30 karakter uzunluğunda olmalıdır.")
+    private String username;
 
     @NotNull
     @Size(min = 8, message = "Şifre en az 8 karakter uzunluğunda olmalıdır.")

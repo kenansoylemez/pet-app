@@ -1,11 +1,12 @@
 package com.example.evcil_hayvan.controller;
 
-import com.example.evcil_hayvan.dto.create.CreateOwnerDto;
+import com.example.evcil_hayvan.dto.auth.OwnerRegisterDto;
 import com.example.evcil_hayvan.dto.delete.DeleteOwnerDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerEmailDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerPasswordDto;
 import com.example.evcil_hayvan.dto.update.owner.UpdateOwnerProfileInfoDto;
 import com.example.evcil_hayvan.entity.Owner;
+import com.example.evcil_hayvan.security.service.AuthService;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
 import com.example.evcil_hayvan.service.pets.CatService;
@@ -20,12 +21,14 @@ public class OwnerController {
     private final PetService petService;
     private final CatService catService;
     private final DogService dogService;
+    private final AuthService authService;
 
-    public OwnerController(OwnerService ownerService, PetService petService, CatService catService, DogService dogService){
+    public OwnerController(OwnerService ownerService, PetService petService, CatService catService, DogService dogService, AuthService authService){
         this.ownerService = ownerService;
         this.petService = petService;
         this.catService = catService;
         this.dogService = dogService;
+        this.authService = authService;
     }
 
     @PutMapping("/update-email")
@@ -44,8 +47,8 @@ public class OwnerController {
     }
 
     @PostMapping("/register")
-    public Owner registerOwner(@RequestBody CreateOwnerDto dto){
-        return ownerService.addOwner(dto);
+    public Owner registerOwner(@RequestBody OwnerRegisterDto dto){
+        return authService.register(dto);
     }
 
     @DeleteMapping("/delete")
