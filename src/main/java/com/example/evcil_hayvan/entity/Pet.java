@@ -63,8 +63,8 @@ public class Pet {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PetPhoto> petPhotos = new ArrayList<>();
 
-    @Column(name = "lost")
-    private Boolean lost;
+    @Column(name = "lost_status")
+    private Boolean lostStatus;
 
     public Pet() {}
 
@@ -78,7 +78,7 @@ public class Pet {
         this.owner = owner;
         this.petProfilePhotoUrl = petProfilePhotoUrl;
         this.weight = weight;
-        this.lost = false;
+        this.lostStatus = false;
     }
 
 }

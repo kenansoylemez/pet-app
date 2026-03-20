@@ -1,4 +1,4 @@
-package com.example.evcil_hayvan.dto.create;
+package com.example.evcil_hayvan.dto.create.pet;
 
 import com.example.evcil_hayvan.enums.DogBreed;
 import com.example.evcil_hayvan.enums.Species;

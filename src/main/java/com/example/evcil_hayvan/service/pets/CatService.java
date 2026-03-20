@@ -1,14 +1,10 @@
 package com.example.evcil_hayvan.service.pets;
 
-import com.example.evcil_hayvan.dto.create.CreateCatDtoCreate;
-import com.example.evcil_hayvan.dto.update.pet.cat.UpdateCatBreedDto;
-import com.example.evcil_hayvan.dto.update.pet.dog.UpdateDogBreedDto;
+import com.example.evcil_hayvan.dto.create.pet.CreateCatDtoCreate;
+import com.example.evcil_hayvan.dto.update.pet.cat.UpdateCatBreedDtoOwnerPet;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.pets.Cat;
-import com.example.evcil_hayvan.entity.pets.Dog;
 import com.example.evcil_hayvan.enums.CatBreed;
-import com.example.evcil_hayvan.enums.DogBreed;
-import com.example.evcil_hayvan.enums.Gender;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
 import com.example.evcil_hayvan.repository.OwnerRepo;
 import com.example.evcil_hayvan.repository.pets.CatRepo;
@@ -62,7 +58,7 @@ public class CatService {
     }
 
     @Transactional
-    public Cat updateCatBreed(UpdateCatBreedDto dto){
+    public Cat updateCatBreed(UpdateCatBreedDtoOwnerPet dto){
         Cat cat = getCatById(dto.getPetId());
 
         if(!(cat.getOwner().getOwnerId().equals(dto.getOwnerId()))){

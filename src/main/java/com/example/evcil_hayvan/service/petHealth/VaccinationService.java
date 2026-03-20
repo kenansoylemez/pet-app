@@ -1,9 +1,9 @@
 package com.example.evcil_hayvan.service.petHealth;
 
-import com.example.evcil_hayvan.dto.create.CreateVaccinationDto;
-import com.example.evcil_hayvan.dto.delete.DeleteVaccinationDto;
+import com.example.evcil_hayvan.dto.create.health.CreateVaccinationDto;
+import com.example.evcil_hayvan.dto.delete.health.DeleteVaccinationDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
-import com.example.evcil_hayvan.dto.update.pet.UpdateVaccinationDto;
+import com.example.evcil_hayvan.dto.update.health.UpdateVaccinationDtoOwnerPet;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.entity.petHealth.Vaccination;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
@@ -75,7 +75,7 @@ public class VaccinationService {
         vaccinationRepo.delete(vaccination);
     }
 
-    public Vaccination updateVaccination(UpdateVaccinationDto dto){
+    public Vaccination updateVaccination(UpdateVaccinationDtoOwnerPet dto){
         Vaccination vaccination = getVaccinationById(dto.getVaccinationId());
         Pet pet = vaccination.getPet();
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +20,9 @@ public class MissingNotice {
     @Column(name = "pet_id")
     private Long petId;
 
+    @Column(name = "created_time")
+    private LocalDateTime createdTime;
+
     @Column(name = "last_seen_location")
     @Size(min = 1, max = 150)
     private String lastSeenLocation;
@@ -29,14 +33,22 @@ public class MissingNotice {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_found")
+    private boolean isFound;
+
+    @Column(name = "found_time")
+    private LocalDateTime foundTime;
+
     public MissingNotice() {
 
     }
 
     public MissingNotice(Long petId, String lastSeenLocation, LocalDateTime lastSeenTime, String description){
         this.petId = petId;
+        this.createdTime = LocalDateTime.now();
         this.lastSeenLocation = lastSeenLocation;
         this.lastSeenTime = lastSeenTime;
         this.description = description;
+        this.isFound = false;
     }
 }

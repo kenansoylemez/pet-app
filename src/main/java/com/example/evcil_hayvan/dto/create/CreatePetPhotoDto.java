@@ -1,16 +1,10 @@
 package com.example.evcil_hayvan.dto.create;
 
-import jakarta.validation.constraints.NotNull;
+import com.example.evcil_hayvan.dto.OwnerPetBaseDto;
 import lombok.Data;
 
 @Data
-public class CreatePetPhotoDto {
-
-    @NotNull
-    private Long ownerId;
-
-    @NotNull
-    private Long petId;
+public class CreatePetPhotoDto extends OwnerPetBaseDto {
 
     private String caption;
 

@@ -1,6 +1,6 @@
 package com.example.evcil_hayvan.controller.pets;
 
-import com.example.evcil_hayvan.dto.create.CreateDogDtoCreate;
+import com.example.evcil_hayvan.dto.create.pet.CreateDogDtoCreate;
 import com.example.evcil_hayvan.entity.pets.Dog;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;

@@ -1,7 +1,7 @@
 package com.example.evcil_hayvan.controller;
 
-import com.example.evcil_hayvan.dto.delete.DeletePetDto;
-import com.example.evcil_hayvan.dto.update.pet.UpdatePetOwnerDto;
+import com.example.evcil_hayvan.dto.delete.DeletePetDtoOwnerPet;
+import com.example.evcil_hayvan.dto.update.pet.ChangeOwnerDtoOwnerPet;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.service.OwnerService;
 import com.example.evcil_hayvan.service.PetService;
@@ -38,12 +38,12 @@ public class PetController {
     }
 
     @PutMapping("/change-owner")
-    public Pet changePetOwner(@RequestBody UpdatePetOwnerDto dto){
+    public Pet changePetOwner(@RequestBody ChangeOwnerDtoOwnerPet dto){
         return petService.changePetOwner(dto);
     }
 
     @DeleteMapping("/delete")
-    public void deletePetById(@RequestBody DeletePetDto dto){
+    public void deletePetById(@RequestBody DeletePetDtoOwnerPet dto){
         petService.deletePetById(dto);
     }
 

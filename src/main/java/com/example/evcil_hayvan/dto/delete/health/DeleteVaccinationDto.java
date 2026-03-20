@@ -1,4 +1,4 @@
-package com.example.evcil_hayvan.dto.delete;
+package com.example.evcil_hayvan.dto.delete.health;
 
 import lombok.Data;
 

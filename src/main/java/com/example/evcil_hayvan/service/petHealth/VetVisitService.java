@@ -1,9 +1,9 @@
 package com.example.evcil_hayvan.service.petHealth;
 
-import com.example.evcil_hayvan.dto.create.CreateVetVisitDto;
-import com.example.evcil_hayvan.dto.delete.DeleteVetVisitDto;
+import com.example.evcil_hayvan.dto.create.health.CreateVetVisitDto;
+import com.example.evcil_hayvan.dto.delete.health.DeleteVetVisitDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
-import com.example.evcil_hayvan.dto.update.pet.UpdateVetVisitDto;
+import com.example.evcil_hayvan.dto.update.health.UpdateVetVisitDtoOwnerPet;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.entity.petHealth.VetVisit;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
@@ -78,7 +78,7 @@ public class VetVisitService {
         vetVisitRepo.delete(vetVisit);
     }
 
-    public VetVisit updateVetVisit(UpdateVetVisitDto dto){
+    public VetVisit updateVetVisit(UpdateVetVisitDtoOwnerPet dto){
         VetVisit vetVisit = findVetVisitById(dto.getVetVisitId());
         Pet pet = vetVisit.getPet();
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){

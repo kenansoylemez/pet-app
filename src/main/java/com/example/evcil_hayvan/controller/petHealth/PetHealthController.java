@@ -1,12 +1,12 @@
 package com.example.evcil_hayvan.controller.petHealth;
 
-import com.example.evcil_hayvan.dto.create.CreateVaccinationDto;
-import com.example.evcil_hayvan.dto.create.CreateVetVisitDto;
-import com.example.evcil_hayvan.dto.delete.DeleteVaccinationDto;
-import com.example.evcil_hayvan.dto.delete.DeleteVetVisitDto;
+import com.example.evcil_hayvan.dto.create.health.CreateVaccinationDto;
+import com.example.evcil_hayvan.dto.create.health.CreateVetVisitDto;
+import com.example.evcil_hayvan.dto.delete.health.DeleteVaccinationDto;
+import com.example.evcil_hayvan.dto.delete.health.DeleteVetVisitDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
-import com.example.evcil_hayvan.dto.update.pet.UpdateVaccinationDto;
-import com.example.evcil_hayvan.dto.update.pet.UpdateVetVisitDto;
+import com.example.evcil_hayvan.dto.update.health.UpdateVaccinationDtoOwnerPet;
+import com.example.evcil_hayvan.dto.update.health.UpdateVetVisitDtoOwnerPet;
 import com.example.evcil_hayvan.entity.petHealth.Vaccination;
 import com.example.evcil_hayvan.entity.petHealth.VetVisit;
 import com.example.evcil_hayvan.service.OwnerService;
@@ -45,12 +45,12 @@ public class PetHealthController {
     }
 
     @PutMapping("/update-vet-visit")
-    public VetVisit updateVetVisit(@RequestBody UpdateVetVisitDto dto){
+    public VetVisit updateVetVisit(@RequestBody UpdateVetVisitDtoOwnerPet dto){
         return vetVisitService.updateVetVisit(dto);
     }
 
     @PutMapping("/update-vaccination")
-    public Vaccination updateVaccination(@RequestBody UpdateVaccinationDto dto){
+    public Vaccination updateVaccination(@RequestBody UpdateVaccinationDtoOwnerPet dto){
         return vaccinationService.updateVaccination(dto);
     }
 
