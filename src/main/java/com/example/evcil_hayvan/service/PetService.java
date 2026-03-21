@@ -3,9 +3,9 @@ package com.example.evcil_hayvan.service;
 import com.example.evcil_hayvan.dto.create.CreatePetPhotoDto;
 import com.example.evcil_hayvan.dto.delete.DeletePetDtoOwnerPet;
 import com.example.evcil_hayvan.dto.get.GetPetAgeDto;
-import com.example.evcil_hayvan.dto.update.pet.CorrectPetIdentityDtoOwnerPet;
-import com.example.evcil_hayvan.dto.update.pet.UpdateProfileDtoOwnerPet;
-import com.example.evcil_hayvan.dto.update.pet.ChangeOwnerDtoOwnerPet;
+import com.example.evcil_hayvan.dto.update.pet.CorrectPetIdentityDto;
+import com.example.evcil_hayvan.dto.update.pet.UpdatePetProfileDto;
+import com.example.evcil_hayvan.dto.update.pet.ChangeOwnerDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.entity.PetPhoto;
@@ -73,7 +73,7 @@ public class PetService {
     }
 
     @Transactional
-    public Pet changePetOwner(ChangeOwnerDtoOwnerPet dto) {
+    public Pet changePetOwner(ChangeOwnerDto dto) {
         Owner oldOwner = ownerService.getOwnerById(dto.getOwnerId());
         Owner newOwner = ownerService.getOwnerById(dto.getNewOwnerId());
         Pet pet = getPetById(dto.getPetId());
@@ -106,7 +106,7 @@ public class PetService {
     }
 
     @Transactional
-    public Pet updatePetProfilePhoto(UpdateProfileDtoOwnerPet dto) {
+    public Pet updatePetProfilePhoto(UpdatePetProfileDto dto) {
         Pet pet = getPetById(dto.getPetId());
         Owner owner = ownerService.getOwnerById(dto.getOwnerId());
         if(!(pet.getOwner().getOwnerId().equals(owner.getOwnerId()))) {
@@ -141,7 +141,7 @@ public class PetService {
     }
 
     @Transactional
-    public Pet updatePetProfile(UpdateProfileDtoOwnerPet dto) {
+    public Pet updatePetProfile(UpdatePetProfileDto dto) {
         Pet pet = getPetById(dto.getPetId());
 
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){
@@ -162,7 +162,7 @@ public class PetService {
     }
 
     @Transactional
-    public Pet correctPetIdentity(CorrectPetIdentityDtoOwnerPet dto) {
+    public Pet correctPetIdentity(CorrectPetIdentityDto dto) {
         Pet pet = getPetById(dto.getPetId());
 
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){

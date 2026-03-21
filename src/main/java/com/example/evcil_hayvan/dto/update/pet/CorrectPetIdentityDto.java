@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class CorrectPetIdentityDtoOwnerPet extends OwnerPetBaseDto {
+public class CorrectPetIdentityDto extends OwnerPetBaseDto {
 
     private LocalDate newBirthDate;
 

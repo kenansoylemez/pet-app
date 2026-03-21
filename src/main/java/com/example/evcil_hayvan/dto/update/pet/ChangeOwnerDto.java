@@ -4,7 +4,7 @@ import com.example.evcil_hayvan.dto.OwnerPetBaseDto;
 import lombok.Data;
 
 @Data
-public class ChangeOwnerDtoOwnerPet extends OwnerPetBaseDto {
+public class ChangeOwnerDto extends OwnerPetBaseDto {
 
     private Long newOwnerId;
 

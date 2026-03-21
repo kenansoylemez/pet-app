@@ -3,7 +3,7 @@ package com.example.evcil_hayvan.service.petHealth;
 import com.example.evcil_hayvan.dto.create.health.CreateVaccinationDto;
 import com.example.evcil_hayvan.dto.delete.health.DeleteVaccinationDto;
 import com.example.evcil_hayvan.dto.get.GetAllByPetDto;
-import com.example.evcil_hayvan.dto.update.health.UpdateVaccinationDtoOwnerPet;
+import com.example.evcil_hayvan.dto.update.health.UpdateVaccinationDto;
 import com.example.evcil_hayvan.entity.Pet;
 import com.example.evcil_hayvan.entity.petHealth.Vaccination;
 import com.example.evcil_hayvan.exceptions.WrongOwnerException;
@@ -41,7 +41,7 @@ public class VaccinationService {
         return vaccination;
     }
 
-    public List getAllVaccinationsByPetId(GetAllByPetDto dto){
+    public List<Vaccination> getAllVaccinationsByPetId(GetAllByPetDto dto){
         Pet pet = petService.getPetById(dto.getPetId());
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){
             throw new WrongOwnerException();
@@ -75,7 +75,7 @@ public class VaccinationService {
         vaccinationRepo.delete(vaccination);
     }
 
-    public Vaccination updateVaccination(UpdateVaccinationDtoOwnerPet dto){
+    public Vaccination updateVaccination(UpdateVaccinationDto dto){
         Vaccination vaccination = getVaccinationById(dto.getVaccinationId());
         Pet pet = vaccination.getPet();
         if(!(pet.getOwner().getOwnerId().equals(dto.getOwnerId()))){

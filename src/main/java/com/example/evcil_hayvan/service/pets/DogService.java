@@ -1,7 +1,7 @@
 package com.example.evcil_hayvan.service.pets;
 
 import com.example.evcil_hayvan.dto.create.pet.CreateDogDtoCreate;
-import com.example.evcil_hayvan.dto.update.pet.dog.UpdateDogBreedDtoOwnerPet;
+import com.example.evcil_hayvan.dto.update.pet.dog.UpdateDogBreedDto;
 import com.example.evcil_hayvan.entity.Owner;
 import com.example.evcil_hayvan.entity.pets.Dog;
 import com.example.evcil_hayvan.enums.DogBreed;
@@ -59,7 +59,7 @@ public class DogService {
     }
 
     @Transactional
-    public Dog updateDogBreed(UpdateDogBreedDtoOwnerPet dto){
+    public Dog updateDogBreed(UpdateDogBreedDto dto){
         Dog dog = getDogById(dto.getPetId());
 
         if(!(dog.getOwner().getOwnerId().equals(dto.getOwnerId()))){

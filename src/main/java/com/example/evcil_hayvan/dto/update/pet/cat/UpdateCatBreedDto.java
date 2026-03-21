@@ -5,7 +5,7 @@ import com.example.evcil_hayvan.enums.CatBreed;
 import lombok.Data;
 
 @Data
-public class UpdateCatBreedDtoOwnerPet extends OwnerPetBaseDto {
+public class UpdateCatBreedDto extends OwnerPetBaseDto {
 
     private CatBreed newCatBreed;
 }

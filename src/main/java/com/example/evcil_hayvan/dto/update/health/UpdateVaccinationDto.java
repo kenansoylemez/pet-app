@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class UpdateVaccinationDtoOwnerPet extends OwnerPetBaseDto {
+public class UpdateVaccinationDto extends OwnerPetBaseDto {
 
     @NotNull
     private Long vaccinationId;
