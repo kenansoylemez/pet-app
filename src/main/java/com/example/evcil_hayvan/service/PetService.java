@@ -154,8 +154,12 @@ public class PetService {
             }
         }
 
-        if(dto.getNewWeight() != null || dto.getNewWeight() != pet.getWeight()){
+        if(dto.getNewWeight() != null || dto.getNewWeight().equals(pet.getWeight())){
             pet.setWeight(dto.getNewWeight());
+        }
+
+        if(dto.getIsNeutered() != null || !dto.getIsNeutered().equals(pet.getIsNeutered())){
+            pet.setIsNeutered(dto.getNewIsNeutered());
         }
 
         return petRepo.save(pet);

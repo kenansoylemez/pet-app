@@ -11,4 +11,6 @@ public class UpdatePetProfileDto extends OwnerPetBaseDto {
     private Double newWeight;
 
     private String newProfilePhotoUrl;
+
+    private Boolean newisNeutered;
 }

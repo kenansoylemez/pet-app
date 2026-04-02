@@ -43,7 +43,8 @@ public class CatService {
                 owner,
                 dto.getPetProfilePhotoUrl(),
                 dto.getWeight(),
-                dto.getBreed()
+                dto.getBreed(),
+                dto.getIsNeutered()
         );
 
         owner.setPetCount(owner.getPetCount() + 1);

@@ -19,8 +19,8 @@ public class Dog extends Pet {
     @Column(name = "breed")
     private DogBreed dogBreed;
 
-    public Dog(String petName, LocalDate petBirthDate, Gender gender, Owner owner, String petProfilePhotoUrl, Double weight, DogBreed dogBreed) {
-        super(petName, petBirthDate, gender, owner, petProfilePhotoUrl, weight);
+    public Dog(String petName, LocalDate petBirthDate, Gender gender, Owner owner, String petProfilePhotoUrl, Double weight, DogBreed dogBreed, Boolean isNeutered) {
+        super(petName, petBirthDate, gender, owner, petProfilePhotoUrl, weight, isNeutered);
         setSpecies(Species.DOG);
         this.dogBreed = dogBreed;
     }

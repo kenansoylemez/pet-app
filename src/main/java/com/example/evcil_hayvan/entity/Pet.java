@@ -66,6 +66,9 @@ public class Pet {
     @Column(name = "lost_status")
     private Boolean lostStatus;
 
+    @Column(name = "neutered")
+    private Boolean isNeutered;
+
     public Pet() {}
 
     public Pet(String petName, LocalDate petBirthDate, Gender gender, Owner owner,
@@ -79,6 +82,7 @@ public class Pet {
         this.petProfilePhotoUrl = petProfilePhotoUrl;
         this.weight = weight;
         this.lostStatus = false;
+        this.isNeutered = false;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.evcil_hayvan.dto.create.pet;
 
 import com.example.evcil_hayvan.enums.Gender;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,5 +21,8 @@ public class CreatePetDto {
     private String petProfilePhotoUrl;
 
     private Double weight;
+
+    @NotNull(message = "Kısırlaştırılma durumu boş bırakılamaz.")
+    private Boolean isNeutered;
 
 }

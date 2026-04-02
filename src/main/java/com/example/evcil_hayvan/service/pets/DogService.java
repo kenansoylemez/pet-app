@@ -43,7 +43,9 @@ public class DogService {
                 owner,
                 dto.getPetProfilePhotoUrl(),
                 dto.getWeight(),
-                dto.getBreed()
+                dto.getBreed(),
+                dto.getIsNeutered()
+            
         );
 
         double age = petService.calculatePetAge(dto.getPetBirthDate());
